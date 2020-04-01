@@ -9,7 +9,6 @@
     "flow-typed": "echo ===== deprecated for create-ts-library =====",
     "flow": "echo ===== deprecated for create-ts-library =====",
     "flow:build": "echo ===== deprecated for create-ts-library =====",
-    "karma": "cross-env NODE_ENV=test babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/karma start",
     "babel": "babel ./config --ignore=node_modules --out-dir ./config",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "test": "npm run lint && npm run flow && npm run test-babel && npm run test-webpack && npm run find-eslint-rules",
@@ -96,17 +95,6 @@
     "in-publish": "^2.0.0",
     "isomorphic-style-loader": "^5.1.0",
     "istanbul-instrumenter-loader": "^3.0.0",
-    "karma": "^4.4.1",
-    "karma-chrome-launcher": "^3.1.0",
-    "karma-commonjs": "^1.0.0",
-    "karma-coverage": "^2.0.1",
-    "karma-firefox-launcher": "^1.0.0",
-    "karma-ie-launcher": "^1.0.0",
-    "karma-mocha": "^1.0.1",
-    "karma-safari-launcher": "^1.0.0",
-    "karma-sinon-chai": "^2.0.2",
-    "karma-sourcemap-loader": "^0.3.7",
-    "karma-spec-reporter": "0.0.32",
     "mocha": "^7",
     "node-cleanup": "^2.1.2",
     "node-sass": "^4.13.1",
@@ -130,7 +118,6 @@
     "babel-jest": "^25.2.4",
     "cross-env": "^7.0.2",
     "eslint-plugin-unicorn": "^18.0.1",
-    "jest": "^25.2.4",
-    "karma-webpack": "^4.0.2"
+    "jest": "^25.2.4"
   }
 }
