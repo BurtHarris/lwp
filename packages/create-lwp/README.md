@@ -1,3 +1,7 @@
+NOTE:  This package cloned from github krakenjs/grumbler.   Props to krakenjs.
+
+This README has not been updated to reflect changes made.
+
 Grumbler
 --------
 
