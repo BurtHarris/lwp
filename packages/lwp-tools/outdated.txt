@@ -12,4 +12,4 @@ flow-bin              0.116.1    0.116.1    0.121.0 dependencies https://github.
 flow-typed            2.6.2      2.6.2      3.1.0   dependencies https://github.com/flow-typed/flow-typed#readme             
 jest                  24.9.0     24.9.0     25.2.4  dependencies https://jestjs.io/                                          
 karma-webpack         4.0.0-rc.3 4.0.0-rc.3 4.0.2   dependencies https://github.com/webpack-contrib/karma-webpack            
-Done in 10.32s.
+Done in 2.47s.

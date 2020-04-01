@@ -275,4 +275,4 @@ yarn audit v1.22.4
 └───────────────┴──────────────────────────────────────────────────────────────┘
 21 vulnerabilities found - Packages audited: 914482
 Severity: 6 Low | 13 Moderate | 2 High
-Done in 3.72s.
+Done in 2.56s.
