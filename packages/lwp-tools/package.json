@@ -1,14 +1,14 @@
 {
-  "name": "create-ts-library",
-  "version": "3.0.68",
-  "description": "Javascript module template.",
+  "name": "lwp-tools",
+  "version": "0.0.1",
+  "description": "Utility scripts for create-lwp based modules.",
   "main": "index.js",
   "scripts": {
     "setup": "yarn install --ignore-optional && yarn run flow-typed",
     "lint": "eslint --ext js,jsx config/ test/ *.js",
-    "flow-typed": "echo ===== deprecated for create-ts-library =====",
-    "flow": "echo ===== deprecated for create-ts-library =====",
-    "flow:build": "echo ===== deprecated for create-ts-library =====",
+    "flow-typed": "echo ===== deprecated for create-lwp =====",
+    "flow": "echo ===== deprecated for create-lwp =====",
+    "flow:build": "echo ===== deprecated for create-lwp =====",
     "babel": "babel ./config --ignore=node_modules --out-dir ./config",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
     "test": "yarn run lint && yarn run flow && yarn run test-babel && yarn run test-webpack",
@@ -37,7 +37,7 @@
     "config",
     "declarations.js"
   ],
-  "repository": "git://github.com/BurtHarris/grumbler-scripts.git",
+  "repository": "git://github.com/BurtHarris/ts-lib-scripts.git",
   "keywords": [
     "template"
   ],
