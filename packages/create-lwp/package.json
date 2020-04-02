@@ -1,6 +1,6 @@
 {
   "name": "create-ts-library",
-  "version": "1.0.0",
+  "version": "0.0.5",
   "description": "Typescript module template.",
   "main": "index.js",
   "scripts": {
@@ -45,8 +45,7 @@
     }
   ],
   "readmeFilename": "README.md",
-  "devDependencies": {},
   "dependencies": {
-    "lwp-tools": "^0.0.2"
+    "lwp-tools": "^0.0.5"
   }
 }

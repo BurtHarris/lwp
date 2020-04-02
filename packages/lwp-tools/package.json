@@ -1,6 +1,6 @@
 {
   "name": "lwp-tools",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Utility scripts for create-lwp based modules.",
   "main": "index.js",
   "scripts": {
