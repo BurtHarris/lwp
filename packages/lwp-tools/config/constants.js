@@ -1,8 +1,9 @@
-export const ENV = {
-    LOCAL:      ('local': "local"),
-    STAGE:      ('stage': "stage"),
-    SANDBOX:    ('sandbox': "sandbox"),
-    PRODUCTION: ('production': "production"),
-    TEST:       ('test': "test"),
-    DEMO:       ('demo': "demo")
-};
+// export const ENV = {
+//     LOCAL:      ('local'),
+//     STAGE:      ('stage'),
+//     SANDBOX:    ('sandbox'),
+//     PRODUCTION: ('production'),
+//     TEST:       ('test'),
+//     DEMO:       ('demo': "demo")
+// };
+"use strict";

@@ -1,6 +1,6 @@
 ## NOTE WELL
 
-This package is not pre-release, it's not ready for anyone else to use yet.
+This package is **pre-release**, it's not ready for anyone else to use yet.
 
 This is a module cloned from https://github.com/krakenjs/grumbler-scripts. Props to krakenjs!
 

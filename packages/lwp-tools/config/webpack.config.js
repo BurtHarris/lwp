@@ -1,56 +1,78 @@
+"use strict";
+
+exports.__esModule = true;
+exports.getCurrentVersion = getCurrentVersion;
+exports.getNextVersion = getNextVersion;
+exports.getWebpackConfig = getWebpackConfig;
+
+const _path = require('path');
+
+const _os = require('os');
+
+const _fs = require('fs');
+
+const _rimraf = _interopRequireDefault(require('rimraf'));
+
+const _semver = _interopRequireDefault(require('semver'));
+
+const _webpack = _interopRequireDefault(require('webpack'));
+
+const _nodeCleanup = _interopRequireDefault(require('node-cleanup'));
+
+const _terserWebpackPlugin = _interopRequireDefault(require('terser-webpack-plugin'));
+
+const _circularDependencyPlugin = _interopRequireDefault(require('circular-dependency-plugin'));
+
+const _hardSourceWebpackPlugin = _interopRequireDefault(require('hard-source-webpack-plugin'));
+
+const _webpackBundleAnalyzer = require('webpack-bundle-analyzer');
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    default: obj
+  };
+}
 /* eslint-disable eslint-comments/disable-enable-pair */
+
 /* eslint-disable array-bracket-spacing */
+
 /* eslint-disable key-spacing */
+
 /* eslint-disable template-curly-spacing */
+
 /* eslint-disable indent */
+
 /* eslint-disable quotes */
+
 /* eslint import/no-nodejs-modules: off, complexity: off */
 
-import { join, resolve, dirname } from "path";
-import { tmpdir } from "os";
-import { existsSync, mkdirSync } from "fs";
-
-import rimraf from "rimraf";
-import semver from "semver";
-import webpack from "webpack";
-import nodeCleanup from "node-cleanup";
-import TerserPlugin from "terser-webpack-plugin";
-import CircularDependencyPlugin from "circular-dependency-plugin";
-import HardSourceWebpackPlugin from "hard-source-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 let cacheDirsCreated = false;
 
-const setupCacheDirs = ({ dynamic = false } = {}) => {
+const setupCacheDirs = ({
+  dynamic = false
+} = {}) => {
   const id = dynamic ? process.pid.toString() : "static";
-
-  const HARD_SOURCE_CACHE_DIR = join(tmpdir(), `cache-hard-source-${id}`);
-  const BABEL_CACHE_DIR = join(tmpdir(), `cache-babel-${id}`);
-  const TERSER_CACHE_DIR = join(tmpdir(), `cache-terser-${id}`);
-  const CACHE_LOADER_DIR = join(tmpdir(), `cache-loader-${id}`);
-
-  const dirs = [
-    HARD_SOURCE_CACHE_DIR,
-    BABEL_CACHE_DIR,
-    TERSER_CACHE_DIR,
-    CACHE_LOADER_DIR
-  ];
+  const HARD_SOURCE_CACHE_DIR = (0, _path.join)((0, _os.tmpdir)(), `cache-hard-source-${id}`);
+  const BABEL_CACHE_DIR = (0, _path.join)((0, _os.tmpdir)(), `cache-babel-${id}`);
+  const TERSER_CACHE_DIR = (0, _path.join)((0, _os.tmpdir)(), `cache-terser-${id}`);
+  const CACHE_LOADER_DIR = (0, _path.join)((0, _os.tmpdir)(), `cache-loader-${id}`);
+  const dirs = [HARD_SOURCE_CACHE_DIR, BABEL_CACHE_DIR, TERSER_CACHE_DIR, CACHE_LOADER_DIR];
 
   if (!cacheDirsCreated) {
     for (const path of dirs) {
-      if (!existsSync(path)) {
-        mkdirSync(path);
+      if (!(0, _fs.existsSync)(path)) {
+        (0, _fs.mkdirSync)(path);
       }
     }
 
     if (dynamic) {
-      nodeCleanup(() => {
+      (0, _nodeCleanup.default)(() => {
         for (const path of dirs) {
-          if (existsSync(path)) {
+          if ((0, _fs.existsSync)(path)) {
             try {
-              rimraf.sync(path);
-            } catch (err) {
-              // pass
+              _rimraf.default.sync(path);
+            } catch (err) {// pass
             }
           }
         }
@@ -75,18 +97,15 @@ function jsonifyPrimitives(item) {
     if (item.hasOwnProperty("__literal__")) {
       return item.__literal__;
     }
+
     const result = {};
+
     for (const key of Object.keys(item)) {
       result[key] = jsonifyPrimitives(item[key]);
     }
+
     return result;
-  } else if (
-    typeof item === "string" ||
-    typeof item === "number" ||
-    typeof item === "boolean" ||
-    item === null ||
-    item === undefined
-  ) {
+  } else if (typeof item === "string" || typeof item === "number" || typeof item === "boolean" || item === null || item === undefined) {
     return JSON.stringify(item);
   } else if (typeof item === "function") {
     return item();
@@ -95,15 +114,15 @@ function jsonifyPrimitives(item) {
   }
 }
 
-export function getCurrentVersion(pkg) {
+function getCurrentVersion(pkg) {
   return pkg.version.replace(/[^\d]+/g, "_");
 }
 
-export function getNextVersion(pkg, level = "patch") {
-  return getCurrentVersion({ version: semver.inc(pkg.version, level) });
-}
-
-// type WebpackConfigOptions = {|
+function getNextVersion(pkg, level = "patch") {
+  return getCurrentVersion({
+    version: _semver.default.inc(pkg.version, level)
+  });
+} // type WebpackConfigOptions = {|
 //   context?: string,
 //   entry?: string | $ReadOnlyArray<string>,
 //   filename?: string,
@@ -124,7 +143,8 @@ export function getNextVersion(pkg, level = "patch") {
 //   dynamic?: boolean
 // |};
 
-export function getWebpackConfig({
+
+function getWebpackConfig({
   context = process.cwd(),
   entry = "./src/index.js",
   filename,
@@ -137,7 +157,7 @@ export function getWebpackConfig({
   options = {},
   vars = {},
   alias = {},
-  path = resolve("./dist"),
+  path = (0, _path.resolve)("./dist"),
   env = test ? "test" : "production",
   sourcemaps = true,
   cache = false,
@@ -157,11 +177,11 @@ export function getWebpackConfig({
     if (minify && !filename.endsWith(".min")) {
       filename = `${filename}.min`;
     }
+
     filename = `${filename}.js`;
   }
 
-  vars = {
-    ...vars,
+  vars = { ...vars,
     __MIN__: minify,
     __TEST__: test,
     __WEB__: web,
@@ -177,61 +197,49 @@ export function getWebpackConfig({
     __GLOBAL__: () => "global",
     global: web ? () => "window" : () => "global"
   };
-
   const mode = debug || test ? "development" : "production";
-
-  const cacheDirs = setupCacheDirs({ dynamic });
-
-  let plugins = [new webpack.DefinePlugin(jsonifyPrimitives(vars))];
-
-  const optimization = optimize
-    ? {
-        minimize: true,
-        namedModules: debug,
-        concatenateModules: true,
-        minimizer: [
-          new TerserPlugin({
-            test: /\.js$/,
-            terserOptions: {
-              warnings: false,
-              compress: {
-                pure_getters: true,
-                unsafe_proto: true,
-                passes: 3,
-                join_vars: minify,
-                sequences: minify,
-                drop_debugger: !debug
-              },
-              output: {
-                beautify: enableBeautify
-              },
-              mangle: minify ? true : false
-            },
-            parallel: true,
-            sourceMap: enableSourceMap,
-            cache: enableCaching && cacheDirs.terser
-          })
-        ]
-      }
-    : {};
+  const cacheDirs = setupCacheDirs({
+    dynamic
+  });
+  let plugins = [new _webpack.default.DefinePlugin(jsonifyPrimitives(vars))];
+  const optimization = optimize ? {
+    minimize: true,
+    namedModules: debug,
+    concatenateModules: true,
+    minimizer: [new _terserWebpackPlugin.default({
+      test: /\.js$/,
+      terserOptions: {
+        warnings: false,
+        compress: {
+          pure_getters: true,
+          unsafe_proto: true,
+          passes: 3,
+          join_vars: minify,
+          sequences: minify,
+          drop_debugger: !debug
+        },
+        output: {
+          beautify: enableBeautify
+        },
+        mangle: minify ? true : false
+      },
+      parallel: true,
+      sourceMap: enableSourceMap,
+      cache: enableCaching && cacheDirs.terser
+    })]
+  } : {};
 
   if (enableCheckCircularDeps) {
-    plugins = [
-      ...plugins,
-      new CircularDependencyPlugin({
-        exclude: /node_modules/,
-        failOnError: true
-      })
-    ];
+    plugins = [...plugins, new _circularDependencyPlugin.default({
+      exclude: /node_modules/,
+      failOnError: true
+    })];
   }
 
   if (enableCaching && !dynamic) {
-    plugins = [
-      ...plugins,
-      new HardSourceWebpackPlugin({
-        cacheDirectory: cacheDirs.hardSource
-      })
-    ];
+    plugins = [...plugins, new _hardSourceWebpackPlugin.default({
+      cacheDirectory: cacheDirs.hardSource
+    })];
   }
 
   if (enableInlineSourceMap) {
@@ -243,34 +251,25 @@ export function getWebpackConfig({
   }
 
   if (analyze) {
-    plugins = [
-      ...plugins,
-      new BundleAnalyzerPlugin({
-        analyzerMode: "static",
-        defaultSizes: "gzip",
-        openAnalyzer: false
-      })
-    ];
+    plugins = [...plugins, new _webpackBundleAnalyzer.BundleAnalyzerPlugin({
+      analyzerMode: "static",
+      defaultSizes: "gzip",
+      openAnalyzer: false
+    })];
   }
 
   const globalObject = `(typeof self !== 'undefined' ? self : this)`;
-
   const rules = [];
 
   if (enableStyling) {
     rules.push({
       test: /\.scss$/i,
-      use: [
-        "isomorphic-style-loader",
-        {
-          loader: "css-loader",
-          options: {
-            importLoaders: 1
-          }
-        },
-        "scoped-css-loader",
-        "sass-loader"
-      ]
+      use: ["isomorphic-style-loader", {
+        loader: "css-loader",
+        options: {
+          importLoaders: 1
+        }
+      }, "scoped-css-loader", "sass-loader"]
     });
   }
 
@@ -290,15 +289,13 @@ export function getWebpackConfig({
     loader: "babel-loader",
     options: {
       cacheDirectory: enableCaching && cacheDirs.babel,
-      extends: join(__dirname, "./.babelrc-browser")
+      extends: (0, _path.join)(__dirname, "./.babelrc-browser")
     }
   });
-
   rules.push({
     test: /\.(html?|css|json|svg)$/,
     loader: "raw-loader"
   });
-
   const output = {
     path,
     filename,
@@ -316,9 +313,7 @@ export function getWebpackConfig({
     context,
     mode,
     entry,
-
     output,
-
     node: {
       console: false,
       global: false,
@@ -328,32 +323,22 @@ export function getWebpackConfig({
       Buffer: false,
       setImmediate: false
     },
-
     resolve: {
-      alias: {
-        ...alias,
-        "@babel/runtime": join(
-          dirname(require.resolve("@babel/runtime/helpers/extends")),
-          ".."
-        )
+      alias: { ...alias,
+        "@babel/runtime": (0, _path.join)((0, _path.dirname)(require.resolve("@babel/runtime/helpers/extends")), "..")
       },
       extensions: [".js", ".jsx"],
       modules: [__dirname, "node_modules"]
     },
-
     module: {
       rules
     },
-
     bail: true,
-
     stats: {
       optimizationBailout: true
     },
-
     optimization,
     plugins,
-
     ...options
   };
 }
