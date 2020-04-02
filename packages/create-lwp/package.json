@@ -45,7 +45,8 @@
     }
   ],
   "readmeFilename": "README.md",
-  "devDependencies": {
-    "ts-library-scripts": "../ts-lib-scripts"
+  "devDependencies": {},
+  "dependencies": {
+    "lwp-tools": "^0.0.2"
   }
 }
