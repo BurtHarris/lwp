@@ -1,6 +1,4 @@
-
-NOTE WELL
----------
+## NOTE WELL
 
 This package is not pre-release, it's not ready for anyone else to use yet.
 
@@ -19,21 +17,18 @@ Shared scripts for grumbler based modules.
 
 ```json
  "scripts": {
-    "setup": "npm install && npm run flow-typed",
+    "setup": "npm install",
     "lint": "eslint --ext js,jsx config/ test/ *.js",
-    "flow-typed": "echo ===== deprecated for create-lwp =====",
-    "flow": "echo ===== deprecated for create-lwp =====",
-    "flow:build": "echo ===== deprecated for create-lwp =====",
     "babel": "babel ./config --ignore=node_modules --out-dir ./config",
     "webpack": "babel-node --plugins=transform-es2015-modules-commonjs ./node_modules/.bin/webpack --progress",
-    "test": "npm run lint && npm run flow && npm run test-babel && npm run test-webpack && npm run find-eslint-rules",
-    "build": "npm run test && npm run babel && npm run webpack && npm run flow:build",
+    "test": "npm run lint && npm run test-babel && npm run test-webpack && npm run find-eslint-rules",
+    "build": "npm run test && npm run babel && npm run webpack ",
     "release": "./publish.sh",
     "release:patch": "./publish.sh patch",
     "release:minor": "./publish.sh minor",
     "release:major": "./publish.sh major",
     "clean": "rimraf dist coverage",
-    "reinstall": "rimraf flow-typed && rimraf node_modules && npm install",
+    "reinstall": "rimraf node_modules && npm install",
     "debug": "cross-env NODE_ENV=debug",
     "prepublish": "in-publish && npm run babel || not-in-publish",
     "postpublish": "git checkout config",
@@ -50,8 +45,6 @@ Shared scripts for grumbler based modules.
 #### Node
 
 ```javascript
-/* @flow */
-
 module.exports = {
   extends: "./node_modules/ts-lib-scripts/config/.eslintrc-node.js"
 };
@@ -60,8 +53,6 @@ module.exports = {
 #### Browser
 
 ```javascript
-/* @flow */
-
 module.exports = {
   extends: "./node_modules/ts-lib-scripts/config/.eslintrc-browser.js"
 };
@@ -92,8 +83,6 @@ module.exports = {
 ### `webpack.config.js`
 
 ```javascript
-/* @flow */
-
 import { getWebpackConfig } from "ts-lib-scripts/config/webpack.config";
 
 const FILE_NAME = "mylibrary";
@@ -113,8 +102,6 @@ export default [WEBPACK_CONFIG];
 ### `karma.conf.js`
 
 ```javascript
-/* @flow */
-
 import { getKarmaConfig } from "ts-lib-scripts/config/karma.conf";
 import { getWebpackConfig } from "ts-lib-scripts/config/webpack.config";
 

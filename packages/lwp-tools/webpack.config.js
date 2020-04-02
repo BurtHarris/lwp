@@ -1,6 +1,5 @@
-/* @flow */
-/* eslint import/no-nodejs-modules: off, import/no-default-export: off */
-
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable import/no-default-export */
 import { tmpdir } from 'os';
 
 import { getWebpackConfig } from './config/webpack.config';

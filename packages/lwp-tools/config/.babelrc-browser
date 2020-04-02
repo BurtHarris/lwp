@@ -17,7 +17,6 @@
             }
         ],
         "@babel/react",
-        "@babel/flow"
     ],
 
     "plugins": [
